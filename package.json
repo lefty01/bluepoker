@@ -28,7 +28,8 @@
     "validator": "~3.2.1",
     "socket.io": "~0.9.16",
     "uuid": "^1.4.1",
-    "ent": "^0.1.0"
+    "ent": "^0.1.0",
+    "cfenv": "1.0.x"
   },
   "license": "MIT",
   "engines": {
