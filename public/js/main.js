@@ -136,30 +136,11 @@ $(document).ready(function() {
 	});
 
 	$('#shareLink').clipboard({
-        path: '../js/lib/jquery.clipboard.swf',
-        copy: function() {
-        	newAlert('success','Link copied to clipboard');
-            return currentRoomUrl;
-        }
-	});
-
-	/**
-	* Theme
-	*/
-
-	// Check local storage if there is already a theme
-	if(localStorage.getItem('theme') == undefined){
-		// If not set it to flatly
-		localStorage.setItem('theme','flatly');
-	}
-
-	// Then apply theme
-	changeTheme(localStorage.getItem('theme'));
-
-	$('#changeTheme li a').click(function(e){
-		var newTheme = $(this).attr('data-theme');
-		localStorage.setItem('theme', newTheme);
-		changeTheme(newTheme);
+		path: '../js/lib/jquery.clipboard.swf',
+		    copy: function() {
+		    newAlert('success','Link copied to clipboard');
+		    return currentRoomUrl;
+		}
 	});
 
 	/**
@@ -185,7 +166,7 @@ $(document).ready(function() {
 		$('#getPlanning').addClass('animated bounceOutDown');
 		//$('#footer').addClass('animated fadeOutDown');
 		$('#qrCode').addClass('animated rotateOutDownLeft');
-		
+
 		// Remove effect of lead text 500ms after
 		setTimeout(function() {
 			$('p.lead').addClass('animated bounceOutDown');
@@ -619,16 +600,6 @@ function playAgain(people){
 	changeUserStory();
 }
 
-function changeTheme(theme){
-	// Remove previously added theme
-	$('#customTheme').remove();
-	// Add link to theme
-	$('head').append('<link id="customTheme" rel="stylesheet" href="/css/themes/'+theme+'.css" />');
-	// Add the border-radius to 0 back
-	$('.navbar').css('border-radius', 0);
-	// Set the name of the theme in the button
-	$('#themeButton').html('Theme : '+capitaliseFirstLetter(theme)+' <span class="caret"></span>');
-}
 
 function capitaliseFirstLetter(string)
 {
@@ -655,5 +626,4 @@ function newMessage(msg, author, me, muteFromServer){
 		$('#chatContent ul').append(message);
 		$('#chatContent ul').scrollTop($('#chatContent ul')[0].scrollHeight);
 	}
-	
 }
