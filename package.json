@@ -1,16 +1,37 @@
 {
-	"name": "NodejsStarterApp",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"start": "node app.js"
-	},
-	"dependencies": {
-		"express": "4.13.x",
-		"cfenv": "1.0.x"
-	},
-	"repository": {},
-	"engines": {
-		"node": "4.x"
-	} 
+  "name": "blue-poker",
+  "version": "0.0.1",
+  "author": "David Boclé",
+  "author": "Andreas Loeffler",
+  "description": "poker planning with socket.io",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:lefty01/bluepoker.git"
+  },
+  "dependencies": {
+    "async": "~0.2.10",
+    "bcrypt-nodejs": "~0.0.3",
+    "cheerio": "~0.13.1",
+    "connect-assets": "~2.5.4",
+    "express": "~3.4.8",
+    "express-validator": "~1.0.1",
+    "fbgraph": "~0.2.9",
+    "github-api": "~0.7.0",
+    "jade": "~1.1.5",
+    "less": "~1.6.3",
+    "request": "~2.33.0",
+    "underscore": "~1.6.0",
+    "twilio": "~1.5.0",
+    "validator": "~3.2.1",
+    "socket.io": "~0.9.16",
+    "uuid": "^1.4.1",
+    "ent": "^0.1.0"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": "0.10.x"
+  }
 }
