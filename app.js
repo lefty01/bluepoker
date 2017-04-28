@@ -3,12 +3,13 @@
  */
 
 var express = require('express');
-var cfenv = require('cfenv');
 var path = require('path');
 var expressValidator = require('express-validator');
 var uuid = require('uuid');
 var ent = require('ent');
+var cfenv = require('cfenv');
 
+var appEnv = cfenv.getAppEnv();
 
 /**
  * Load controllers.
@@ -39,11 +40,7 @@ var day = (hour * 24);
 var week = (day * 7);
 var month = (day * 30);
 
-var appEnv = cfenv.getAppEnv();
-//var host = (process.env.VCAP_APP_HOST || '0.0.0.0');
-//var port = (process.env.VCAP_APP_PORT || 3001);
-//app.set('port', process.env.PORT || 3000);
-
+app.set('port', appEnv.port || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(require('connect-assets')({
@@ -76,13 +73,9 @@ app.get('/room/:room', homeController.room);
 /**
  * Start Express server.
  */
-// get the app environment from Cloud Foundry
 
-// server.listen(appEnv.port, function() {
-//	console.log("✔ Express server listening on port %d in %s mode",
-//		    appEnv.port, app.settings.env);
-app.listen(appEnv.port, '0.0.0.0', function() {
-	console.log("server starting on " + appEnv.url + ", port=" + appEnv.port);
+server.listen(app.get('port'), function() {
+	console.log("✔ Express server listening on port %d in %s mode", app.get('port'), app.settings.env);
 });
 
 /**

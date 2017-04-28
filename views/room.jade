@@ -6,7 +6,6 @@ block content
 		p.lead
 			| Planning Poker is a way to estimate a relative effort for a given task.
 			br
-			| This implementation was build upon new technologies such as NodeJS, Socket.IO...
 			br
 			br
 			a#shareLink(href='/room/#{room}') Share the link to your collaborators ➔
@@ -32,8 +31,6 @@ block content
 				div.col-md-1.col-xs-2
 					button.btn.btn-default.cardSelection(type='button') 0
 				div.col-md-1.col-xs-2
-					button.btn.btn-default.cardSelection(type='button') 1/2
-				div.col-md-1.col-xs-2
 					button.btn.btn-default.cardSelection(type='button') 1
 				div.col-md-1.col-xs-2
 					button.btn.btn-default.cardSelection(type='button') 2
@@ -48,10 +45,6 @@ block content
 				div.col-md-1.col-xs-2
 					button.btn.btn-default.cardSelection(type='button') 20
 				div.col-md-1.col-xs-2
-					button.btn.btn-default.cardSelection(type='button') 40
-				div.col-md-1.col-xs-2
-					button.btn.btn-default.cardSelection(type='button') 100
-				div.col-md-1.col-xs-2
 					button.btn.btn-default.cardSelection(type='button') ?
 
 			ul#cardsResult
@@ -62,17 +55,6 @@ block content
 			button#switchGame.btn.btn-info.btn-block(type='button')
 				i.fa.fa-external-link
 				| Share link
-
-	div#chat.hidden-xs
-		div#chatTitle
-			p Chat 
-				i.fa.fa-volume-up.muteButton
-		div#chatContent
-			ul
-		div#chatInput
-			textarea
-	div#chatHidden.hidden-xs
-		p Chat
 
 	div#alerts
 

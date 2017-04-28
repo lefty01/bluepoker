@@ -9,17 +9,8 @@ var baseUrl = window.location.protocol + "//" + window.location.host + "/";
 var currentRoomUrl = baseUrl+'room/'+room;
 var mute = false;
 
-	// Load fb sound
-	var fbChatSound = document.createElement('audio');
-	fbChatSound.setAttribute('src', '../fb-pop-noise.mp3');
-	// fbChatSound.setAttribute('autoplay', 'autoplay');
-	$.get();
-	fbChatSound.addEventListener("load", function() {
-		fbChatSound.play();
-	}, true);
 
 $(document).ready(function() {
-	
 	/**
 	* Socket.IO
 	* ________________________
@@ -69,7 +60,7 @@ $(document).ready(function() {
 			if (data.people.hasOwnProperty(i)) {
 				// Differentiate current client
 				if(i == id){
-					$('#participants').append('<li class="list-group-item list-group-item-success activePlayer notChangingName">'+data.people[i].name+'</li>');					
+					$('#participants').append('<li class="list-group-item list-group-item-success activePlayer notChangingName">'+data.people[i].name+'</li>');
 				}else{
 					$('#participants').append('<li class="list-group-item">'+data.people[i].name+'</li>');
 				}
@@ -111,14 +102,6 @@ $(document).ready(function() {
 		playAgain(people);
 		newAlert('info', 'New game started');
 	});
-
-	/**
-	* Receive Message
-	*/
-	socket.on('message', function(data){
-		newMessage(data.msg, data.author, data.me, data.server);
-	});
-
 
 
 
@@ -309,84 +292,6 @@ $(document).ready(function() {
 		e.preventDefault();
 	});
 
-	/**
-	* Chat
-	*/
-
-	// Remove active class if we click out of the chat
-	$('html').click(function() {
-		$('#chatTitle').removeClass( "active" );
-	});
-
-	// Add active class if in the chat
-	$('#chat').click(function(event){
-		$('#chatTitle').addClass( "active" );
-		$('#chatInput textarea').focus();
-		event.stopPropagation();
-	});
-
-	// Add the "online" circle when page is loaded
-	$('#chatTitle p').prepend('<i class="fa fa-circle"></i> ');
-	$('#chatHidden p').prepend('<i class="fa fa-circle"></i> ');
-
-	$('#chatInput textarea').keyup(function () {
-		if($("#chatInput textarea")[0].scrollHeight < 77){
-			$("#chatInput").height( $("#chatInput textarea")[0].scrollHeight );
-			$("#chatInput textarea").height( $("#chatInput textarea")[0].scrollHeight );
-		}
-	});
-
-	// Hide Chat
-	$('#chatTitle').click(function(e){
-		// Don't hide if user is trying to mute chat
-		if (!$(e.target).hasClass('muteButton')){
-			$('#chat').hide();
-			$('#chatHidden').show();
-			e.preventDefault();
-		}
-	});
-
-	// Show chat
-	$('#chatHidden').click(function(e){
-		$('#chatHidden').hide();
-		$('#chat').show();
-		e.preventDefault();
-	});
-
-	$('.muteButton').click(function(e){
-		$(this).toggleClass('fa-volume-off');
-		$(this).toggleClass('fa-volume-up');
-		mute = !mute;
-		e.preventDefault();
-	});
-
-	// Send value when "enter" is presed and hide chat if "esc"
-	$('#chatInput textarea').on('keyup', function(e) {
-		if (e.keyCode == 13 && ! e.shiftKey) {
-			e.preventDefault();
-
-			var msg = this.value;
-			// Remove last &Newline; (odd...)
-			msg = msg.slice(0, -1)
-
-			// Send it to the server
-			socket.emit('message', {'room' : room, 'msg' : msg});
-
-			// Display it locally
-			newMessage(msg, null , true);
-			
-			this.value = '';
-
-			// Reset size of textaera
-			$("#chatInput").height(16);
-			$("#chatInput textarea").height(16);
-		}else if(e.keyCode == 27){
-			$('#chat').hide();
-			$('#chatHidden').show();
-			e.preventDefault();
-		}
-	});
-
 
 });
 
@@ -402,13 +307,12 @@ function generateRandomString(){
     var output = new Array();
     var input_arr = input.split('');
     var input_arr_len = input_arr.length;
-    
+
     for (x=0; x<howmany; x++){
-        output[x] = input_arr[Math.floor(Math.random()*input_arr_len)];
+	output[x] = input_arr[Math.floor(Math.random()*input_arr_len)];
     }
-    
+
     output = output.join('');
-    
     return output;
 }
 
@@ -486,7 +390,7 @@ function displayCards(people){
 						+'<div data-card="'+people[i].card+'" class="bg-success cards">'
 							+'<p>'+people[i].card+'</p>'
 						+'</div>'
-					+'</li>');					
+					+'</li>');
 				}else{
 					$('#cardsResult').append('<li><span>'+people[i].name+'</span>'
 						+'<div data-card="'+people[i].card+'" class="bg-danger cards">'
@@ -606,24 +510,3 @@ function capitaliseFirstLetter(string)
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function newMessage(msg, author, me, muteFromServer){
-	msg = msg.trim();
-
-	if(msg != ''){
-		if(me === true){
-			var message = '<li class="me">'
-			+'<div class="message">'+msg+'</div>'
-			+'</li>';
-		}else{
-			var message = '<li>'
-			+'<div class="author">'+author+'</div>'
-			+'<div class="message">'+msg+'</div>'
-			+'</li>';
-			if(mute != true && muteFromServer != true){
-				fbChatSound.play();
-			}
-		}
-		$('#chatContent ul').append(message);
-		$('#chatContent ul').scrollTop($('#chatContent ul')[0].scrollHeight);
-	}
-}
